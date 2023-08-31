@@ -13,6 +13,7 @@ class PeliculaController extends Controller
         $peliculas = Pelicula::all();
 
         return response()->json($peliculas);
+        
     }
 
     public function store(Request $request)
@@ -48,6 +49,12 @@ class PeliculaController extends Controller
         $pelicula = Pelicula::find($id);
         $pelicula->delete();
         return response()->json($pelicula);
+    }
+
+    public function search(Request $request){
+        $searchTerm = $request->input('search');
+        $peliculas = Pelicula::where('nombre','ILIKE','%'.$searchTerm.'%')->get();
+        return response()->json($peliculas);
     }
     
 }
